@@ -1,0 +1,12 @@
+---
+import Icon from './Icon.astro';
+import { social, email } from '../data/site';
+---
+<footer class="social">
+  <ul aria-label="Social links">
+    {social.map((s) => (
+      <li><a href={s.href} target="_blank" rel="me noopener" aria-label={s.label} title={s.label}><Icon name={s.icon} size={20} /></a></li>
+    ))}
+    <li><a href={`mailto:${email}`} aria-label="Email" title="Email"><Icon name="email" size={20} /></a></li>
+  </ul>
+</footer>

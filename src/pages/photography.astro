@@ -1,0 +1,172 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+// Landscape-first gallery: the first frame is a full-width 2:1 cover, the rest are 3:2.
+const frames = [
+  {
+    slug: "sunset-rocks",
+    w: 1440,
+    h: 957,
+    alt: "Waves breaking over dark boulders on a beach under an orange and pink sunset sky",
+  },
+  {
+    slug: "footballer",
+    w: 1440,
+    h: 938,
+    alt: "A freestyle footballer balancing a ball on his foot on a grey mat, seen from above",
+  },
+  {
+    slug: "food-truck",
+    w: 1440,
+    h: 961,
+    alt: 'A white food truck with a bright pink "Cukiernia" sign parked beside a small Thai and Vietnamese bar under a blue sky',
+  },
+  {
+    slug: "folk-dancers",
+    w: 1440,
+    h: 958,
+    alt: "Three women in bright orange and teal folk dresses posing on a stage in front of Polish and Mexican flags and sunflowers",
+  },
+  {
+    slug: "bicycles",
+    w: 1440,
+    h: 959,
+    alt: "Rental bicycles in blue and orange lined up on cobblestones in front of a pastel-coloured building",
+  },
+  {
+    slug: "street-train",
+    w: 1440,
+    h: 957,
+    alt: 'Two old train carriages sitting on the roof of a brick building painted with the words "Let\'s adore and endure each other"',
+  },
+  {
+    slug: "playground",
+    w: 1440,
+    h: 961,
+    alt: "A colourful orange and red playground tower with a spiral slide behind a fence, framed by a bare spring tree and an apartment block",
+  },
+];
+---
+
+<Base
+  current="photography"
+  title="Photography · Łukasz Wójcik"
+  description="Documentary photography: streets, people and the small moments in between. A selection of frames from the portfolio at lukaszwojcik.photo."
+>
+  <h1>Photography</h1>
+  <p class="tagline">I’m a documentary photographer and photojournalist.</p>
+  <div class="prose">
+    <p>
+      I’ve been photographing since the early 2010s, both as a hobby and on
+      part-time assignments. My subject is the everyday around me: usually
+      streets, people, current events and the small moments in between. I like
+      to take inspiration from the greats of documentary photography, such as
+      William Eggleston, Stephen Shore, Chris Niedenthal, Elliott Erwitt and
+      many others.
+    </p>
+    <p>
+      My news and illustrative photographs have been published by well-known
+      Polish media outlets, in print and online, including Newsweek Polska,
+      Tygodnik Przegląd, Business Insider Polska, Grupa naTemat and Onet, among
+      others.
+    </p>
+    <p>
+      My portfolio lives on its own site. I often post glimpses of my current
+      work on social media.
+    </p>
+  </div>
+  <div class="actions">
+    <a
+      class="btn primary"
+      href="https://lukaszwojcik.photo/"
+      target="_blank"
+      rel="noopener"
+    >
+      <span>View portfolio</span>
+    </a>
+    <a
+      class="btn"
+      href="https://www.instagram.com/lukaszwojcik.photo/"
+      target="_blank"
+      rel="noopener"
+    >
+      <Icon name="instagram" size={18} />
+      <span>Instagram</span>
+    </a>
+    <a
+      class="btn"
+      href="https://glass.photo/lukaszwojcik"
+      target="_blank"
+      rel="noopener"
+    >
+      <Icon name="glass" size={18} />
+      <span>Glass</span>
+    </a>
+    <a
+      class="btn"
+      href="https://500px.com/p/lwojcik"
+      target="_blank"
+      rel="noopener"
+    >
+      <Icon name="px500" size={18} />
+      <span>500px</span>
+    </a>
+  </div>
+  <div class="gallery">
+    {frames.map((f, i) => (
+      <figure>
+        <div class="ph">
+          <a
+            href={`/assets/img/photography/${f.slug}-1440.webp`}
+            data-pswp-width={f.w}
+            data-pswp-height={f.h}
+            data-pswp-srcset={`/assets/img/photography/${f.slug}-640.webp 640w, /assets/img/photography/${f.slug}-1024.webp 1024w, /assets/img/photography/${f.slug}-1440.webp 1440w`}
+            aria-label={`View larger: ${f.alt}`}
+          >
+            <img
+              src={`/assets/img/photography/${f.slug}-1024.webp`}
+              srcset={`/assets/img/photography/${f.slug}-640.webp 640w, /assets/img/photography/${f.slug}-1024.webp 1024w, /assets/img/photography/${f.slug}-1440.webp 1440w`}
+              sizes={
+                i === 0
+                  ? "(max-width: 800px) 100vw, 768px"
+                  : "(max-width: 560px) 100vw, 380px"
+              }
+              width={f.w}
+              height={f.h}
+              alt={f.alt}
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          </a>
+        </div>
+      </figure>
+    ))}
+  </div>
+</Base>
+
+<script>
+  // Lightbox: PhotoSwipe. Only this page loads it, and its main part is fetched when the first photo is opened.
+  // Swipe, pinch or double-tap to zoom, arrows (desktop) and the keyboard to move on, Esc or a tap outside to close.
+  import PhotoSwipeLightbox from "photoswipe/lightbox";
+  import "photoswipe/style.css";
+
+  let lightbox: PhotoSwipeLightbox | null = null;
+  function destroy() {
+    lightbox?.destroy();
+    lightbox = null;
+  }
+  function init() {
+    destroy();
+    if (!document.querySelector(".gallery a")) return;
+    lightbox = new PhotoSwipeLightbox({
+      gallery: ".gallery",
+      children: "a",
+      pswpModule: () => import("photoswipe"),
+      bgOpacity: 0.94,
+      padding: { top: 24, bottom: 24, left: 12, right: 12 },
+    });
+    lightbox.init();
+  }
+  document.addEventListener("astro:page-load", init);
+  document.addEventListener("astro:before-swap", destroy);
+</script>

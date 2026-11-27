@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  current="about"
+  title="Łukasz Wójcik"
+  description="Łukasz Wójcik: software engineer, photographer, curious tinkerer. What I build, the photographs I take, what I write, and what I'm doing right now."
+>
+  <img
+    class="portrait"
+    src="/assets/img/photo.jpg"
+    width="96"
+    height="96"
+    alt="Łukasz Wójcik"
+  />
+  <h1>Hi, I’m Łukasz.</h1>
+  <p class="tagline">
+    software engineer / photographer / curious tinkerer
+  </p>
+  <div class="prose">
+    <p>
+      I’m a software engineer from Warsaw, Poland. I build software and web
+      applications that save time or solve problems, and I love making things
+      that are useful (or fun, or ideally both) to others. If I’m not at my
+      computer, then I’m probably photographing.
+    </p>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="/projects/"><span>Projects</span></a>
+    <a class="btn" href="/photography/"><span>Photography</span></a>
+    <a class="btn contact" href="/contact/"><span>Say hello</span></a>
+  </div>
+  {
+    import.meta.env.DEV && (
+      <p class="note">
+        <a href="#debug" class="inline-link" data-open-debug>
+          Open debug panel
+        </a>
+      </p>
+    )
+  }
+</Base>

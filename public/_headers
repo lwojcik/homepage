@@ -1,0 +1,16 @@
+# Response headers for statichost.eu. The LAST matching Cache-Control wins, so the general rule comes first and the specific ones after it.
+*
+    Cache-Control: public, max-age=60, must-revalidate
+    X-Content-Type-Options: nosniff
+    Referrer-Policy: strict-origin-when-cross-origin
+# scene scripts, site.js and icons: not renamed when they change, so a short cache and a check each time
+/assets/*
+    Cache-Control: public, max-age=3600, must-revalidate
+# photos and the font never change under the same name
+/assets/img/*
+    Cache-Control: public, max-age=2592000
+/assets/fonts/*
+    Cache-Control: public, max-age=31536000, immutable
+# Astro's own files carry a hash in their name: cache them for ever
+/_astro/*
+    Cache-Control: public, max-age=31536000, immutable

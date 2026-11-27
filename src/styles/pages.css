@@ -1,0 +1,111 @@
+/* Components for the subpages (cards, link lists, gallery, posts). Spacing comes from the scale in site.css. */
+
+
+/* Portrait on the About page. */
+.portrait { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; display: block; margin: 0 0 var(--s4);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--avatar-ink, #1d2230) 12%, transparent); }
+/* Phones: a smaller portrait, so the About page has a chance of fitting on screen. */
+@media (max-width: 560px) { .portrait { width: 64px; height: 64px; margin-bottom: var(--s3); } }
+.tagline { font-weight: 500; font-size: 1.45rem; line-height: 1.5; margin: 0; max-width: 34em; text-wrap: balance; }
+.note { font-size: 1.08rem; opacity: .7; margin: var(--s4) 0 0; max-width: 32em; text-wrap: pretty; }
+.section-label { margin: var(--s7) 0 var(--s3); font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; line-height: 1.2; letter-spacing: -.01em; text-transform: none; opacity: 1; text-align: left; }
+.tagline + .section-label { margin-top: var(--s6); }   /* the first heading under the tagline: the same 32px as any first block */
+
+/* "Right now": a live status pill fed by the scheduler. */
+.status { display: inline-flex; align-items: center; gap: var(--s2); margin: var(--s5) 0 0; padding: var(--s2) var(--s4) var(--s2) var(--s3); border-radius: 999px;
+          font-size: .84rem; font-weight: 500; background: color-mix(in srgb, var(--avatar-ink, #1d2230) 7%, transparent); }
+.status[hidden] { display: none; }
+.status .dot { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 0 0 rgba(61,220,132,.55); animation: pulse 2.6s ease-out infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 7px rgba(61,220,132,0); } 100% { box-shadow: 0 0 0 0 rgba(61,220,132,0); } }
+
+/* Link list (Contact). */
+.links-list { list-style: none; margin: var(--s3) 0 0; padding: 0; display: grid; gap: var(--s3); }
+.link { display: flex; align-items: center; gap: var(--s4); text-align: left; padding: var(--s4) var(--s5) var(--s4) var(--s4); border-radius: 16px;
+        color: inherit; text-decoration: none; background: color-mix(in srgb, var(--avatar-ink, #1d2230) 6%, transparent);
+        transition: transform .18s ease, background-color .18s ease; }
+/* Two columns on wider screens; the main (primary) row spans both. */
+@media (min-width: 640px) { .links-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* A card left alone in its row (an odd count) takes the whole row. */
+@media (min-width: 640px) { .links-list > li:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+.link:hover, .link:focus-visible { transform: translateY(-2px); background: color-mix(in srgb, var(--avatar-ink, #1d2230) 12%, transparent); outline: none; }
+.link:focus-visible { box-shadow: 0 0 0 2px var(--avatar-ink, #1d2230); }
+.link:active { transform: translateY(0); }
+.link .ic { flex: none; width: 22px; height: 22px; }
+.link .t { flex: 1; min-width: 0; font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; line-height: 1.2; overflow-wrap: anywhere; }
+.link .t small { display: block; margin-top: var(--s1); font-family: var(--font-text); font-weight: 400; font-size: 1rem; opacity: .7; }
+.link .go { flex: none; width: 18px; height: 18px; opacity: .45; transition: transform .18s ease, opacity .18s ease; }
+.link:hover .go, .link:focus-visible .go { opacity: 1; transform: translateX(3px); }
+.link.primary { background: var(--avatar-ink, #1d2230); color: var(--avatar-card-solid, #fff); }
+.link.primary:hover, .link.primary:focus-visible { background: var(--avatar-ink, #1d2230); filter: brightness(1.12); }
+.link.primary .t small { opacity: .75; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+html.avatar-ready:not(.avatar-settled) .link, html.avatar-ready:not(.avatar-settled) .card, html.avatar-ready:not(.avatar-settled) .post a { animation: rise .7s cubic-bezier(.2,.7,.2,1) backwards; animation-delay: calc(.15s + var(--i, 0) * 70ms); }
+
+/* Project cards. */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: var(--s4); margin-top: var(--s6); text-align: left; }
+.card { display: flex; flex-direction: column; gap: var(--s2); padding: var(--s5); border-radius: 18px; color: inherit; text-decoration: none;
+        background: color-mix(in srgb, var(--avatar-ink, #1d2230) 6%, transparent); transition: transform .18s ease, background-color .18s ease; }
+.card:hover, .card:focus-visible { transform: translateY(-3px); background: color-mix(in srgb, var(--avatar-ink, #1d2230) 11%, transparent); outline: none; }
+.card:focus-visible { box-shadow: 0 0 0 2px var(--avatar-ink, #1d2230); }
+.card h2 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 1.45rem; line-height: 1.2; display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+.card h2 svg { width: 18px; height: 18px; flex: none; opacity: .45; transition: transform .18s ease, opacity .18s ease; }
+.card:hover h2 svg, .card:focus-visible h2 svg { opacity: 1; transform: translate(2px, -2px); }
+.card p { margin: 0; opacity: .88; font-weight: 350; font-size: 1.14rem; line-height: 1.5; }
+.tags { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: auto; padding-top: var(--s3); list-style: none; margin-bottom: 0; margin-inline: 0; padding-inline: 0; }
+.tag { font-size: .76rem; font-weight: 600; letter-spacing: .04em; padding: 3px var(--s3); border-radius: 999px; background: color-mix(in srgb, var(--avatar-ink, #1d2230) 9%, transparent); }
+
+/* Photography: most frames are horizontal, so the gallery is landscape-first. The first frame runs the full
+   width, the rest sit two to a row; every photo is shown whole, at its own proportions. */
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s6); margin-top: var(--s6); text-align: left; }   /* wide gaps: the pieces hang apart */
+.gallery figure { margin: 0; display: flex; }   /* the frames in a row stretch to the same height (the photos are a hair different in shape) */
+.gallery figure:first-child { grid-column: 1 / -1; }
+/* The photos are plain pictures (no links, square corners), hung like an exhibition: a thin black frame, a wide white mat (passe-partout)
+   with a bevelled edge round the photo, and a soft shadow on the wall; the pieces have room between them. */
+.gallery .ph { display: flex; align-items: center; box-sizing: border-box; width: 100%; padding: 34px; overflow: hidden;
+               background: #F6F4EE; border: 7px solid #121212; box-shadow: 0 10px 26px rgba(0, 0, 0, .22), 0 2px 6px rgba(0, 0, 0, .18); }
+.gallery .ph img { flex: none; height: auto; object-fit: contain; box-shadow: 0 0 0 1px rgba(0, 0, 0, .35), 0 0 0 3px #E9E6DE; }   /* every photo keeps its own proportions: nothing is cropped */                  /* the bevel of the cut mat round the photo */
+/* At night the black frame would vanish into the dark wall: lift it to a dark slate, give it a light outer edge and a faint glow, so every frame still reads as a frame. */
+html[data-avatar-time="night"] .gallery .ph { background: #DAD7CF; border-color: #4A433B; box-shadow: 0 0 0 1px rgba(236, 228, 214, .5), 0 0 22px rgba(214, 190, 150, .14), 0 10px 26px rgba(0, 0, 0, .5); }
+html[data-avatar-time="night"] .gallery .ph img { box-shadow: 0 0 0 1px rgba(0, 0, 0, .4), 0 0 0 3px #CBC8C0; }
+/* The mat: 34px on a desktop, a little wider on tablets (38px) and narrower on phones (24px, where the screen is small). */
+@media (max-width: 999px) { .gallery .ph { padding: 38px; } }
+@media (max-width: 560px) { .gallery .ph { padding: 24px; border-width: 5px; } }
+.gallery img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gallery figcaption { margin-top: var(--s2); font-size: 1.05rem; line-height: 1.35; }
+.gallery .cat { display: block; font-size: .74rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; opacity: .55; margin-top: 2px; }
+/* Not on a desktop: more room between the frames (3rem on tablets, 2.5rem on phones; 2rem on a desktop). */
+@media (max-width: 999px) { .gallery { gap: 3rem; } }
+@media (max-width: 560px) {
+  .gallery { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+/* Writing. */
+.section-note + .cards { margin-top: var(--s3); }
+.cards > :last-child:nth-child(odd) { grid-column: 1 / -1; }   /* an odd last card takes the full row */
+.section-note { margin: calc(-1 * var(--s1)) 0 var(--s3); text-align: left; font-size: 1.1rem; opacity: .75; max-width: 34em; }
+.posts { list-style: none; margin: var(--s3) calc(-1 * var(--s4)) 0;   /* the row padding hangs into the margin: the text lines up with everything else */ padding: 0; display: grid; gap: var(--s1); text-align: left; }
+.post a { display: grid; grid-template-columns: 7rem 1fr; gap: var(--s4); padding: var(--s4); border-radius: 14px; color: inherit; text-decoration: none; transition: background-color .18s ease; }
+.post a:hover, .post a:focus-visible { background: color-mix(in srgb, var(--avatar-ink, #1d2230) 8%, transparent); outline: none; }
+.post time { font-size: 1rem; color: var(--accent); font-weight: 600; opacity: 1; font-variant-numeric: tabular-nums; padding-top: .2rem; }
+.post h3 { margin: 0 0 var(--s1); font-family: var(--font-display); font-weight: 600; font-size: 1.32rem; line-height: 1.25; }
+.post p { margin: 0; opacity: .86; font-weight: 350; font-size: 1.14rem; line-height: 1.5; }
+@media (max-width: 560px) { .post a { grid-template-columns: 1fr; gap: var(--s1); } }
+
+/* Prose helpers for longer text. */
+.prose h2 { font-family: var(--font-display); font-size: 1.3rem; line-height: 1.25; margin: var(--s6) 0 var(--s2); }
+.prose { opacity: 1; }
+.prose p { opacity: .88; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.avatar-ready .link, html.avatar-ready .card, html.avatar-ready .post a { animation: none; }
+  .status .dot { animation: none; }
+  .link, .link .go, .card, .card h2 svg, .gallery .ph, .post a { transition: none; }
+}
+
+/* An odd card at the end spans the full row instead of sitting alone beside an empty gap. */
+.cards .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+/* The photos open in a lightbox (PhotoSwipe, see photography.astro). */
+.gallery .ph a { display: block; width: 100%; cursor: zoom-in; }
+.gallery .ph a:focus-visible { outline: 2px solid var(--accent, #2457f5); outline-offset: 4px; }
+:root { --pswp-bg: #12100e; }

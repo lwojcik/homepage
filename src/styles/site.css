@@ -1,0 +1,241 @@
+/* Shared styles for every page: fonts, the semi-transparent panel, the menu (hamburger on phones),
+   headings and the one-time fade-in. Colours come from the CSS variables the living background sets. */
+/* Source Sans 3 (SIL Open Font License, see fonts/LICENSE-SourceSans3-OFL.md), hosted here: no request to Google.
+   Two subsets: latin, and latin-ext for Polish letters such as Ł, ł, ą, ę. */
+@font-face {
+  font-family: 'Source Sans 3'; font-style: normal; font-weight: 300 700; font-display: swap;
+  src: url(/assets/fonts/source-sans-3-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Source Sans 3'; font-style: normal; font-weight: 300 700; font-display: swap;
+  src: url(/assets/fonts/source-sans-3-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* One spacing scale for everything (4px steps); every padding, margin and gap uses it, so the rhythm is consistent. */
+:root { --reserve: calc(var(--avatar-scene-h, 0px) + 1.5rem); --s1: .25rem; --s2: .5rem; --s3: .75rem; --s4: 1rem; --s5: 1.5rem; --s6: 2rem; --s7: 3rem; }
+:root { --font-display: 'Source Sans 3', system-ui, sans-serif; --font-text: 'Source Sans 3', system-ui, sans-serif; }
+/* Keep the page background transparent so the sky shows through. */
+html { background: var(--avatar-sky-bg, #f2f4f7); }
+/* One delicate fade-in when everything is ready: no flashes while it loads. */
+body { opacity: 1; transition: color .8s; }
+/* Only the very first load fades in (the head script adds .avatar-first); client-side page changes never touch opacity. */
+html.avatar-first body { transition: opacity .45s ease, color .8s; }
+html.avatar-first:not(.avatar-ready) body { opacity: 0; }
+/* After a client-side page change there is nothing to fade in: no opacity transition at all. */
+html.avatar-settled body, html.avatar-settled .page, html.avatar-settled .page * { transition: none !important; }
+@media (prefers-reduced-motion: reduce) { body { transition: none; } }
+body { margin: 0; min-height: 100vh; padding-bottom: var(--reserve); box-sizing: border-box; font: 400 20px/1.6 var(--font-text); font-optical-sizing: auto;
+       color: var(--avatar-ink, #1d2230); transition: color .8s;
+       display: grid; place-items: start center; align-content: start; text-align: left; }
+/* Text sits on a semi-transparent panel, so it stays legible on any sky. */
+main { position: relative; z-index: 100; /* below the scene (z 200): the floor and avatar are in the foreground */ background: none; /* no frame: the text sits straight on the sky; the avatar stays fully visible below it */
+       /* Full screen: the panel spans the whole window; the text column inside keeps one reading width (760px) on every page. */
+       padding: clamp(var(--s6), 9vh, 5rem) max(var(--s5), calc((100% - 760px) / 2)) var(--s5); width: 100%; box-sizing: border-box; margin: 0; }
+nav ul { list-style: none; margin: 0 0 var(--s6); padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s1); }
+nav a { display: block; color: inherit; text-decoration: none; font-family: var(--font-display); font-size: .95rem; font-weight: 600;
+        letter-spacing: .1em; text-transform: uppercase; padding: var(--s3) var(--s4); border-radius: 999px; opacity: .75;
+        transition: opacity .15s, background-color .15s; }
+nav a:hover, nav a:focus-visible { opacity: 1; background: color-mix(in srgb, var(--avatar-ink, #1d2230) 9%, transparent); outline: none; }
+/* The selected page: a filled pill, no lines. */
+nav a[aria-current="page"] { opacity: 1; background: var(--avatar-ink, #1d2230); color: var(--avatar-card-solid, #fff); }
+/* ---- Hamburger: only on phones. On wide screens the toggle is hidden and the list is always open. ---- */
+.menu-toggle { display: none; }
+.menu-wrap { display: block; position: relative; }
+@media (max-width: 560px) {
+  main { padding: var(--s4) var(--s4) var(--s5); }
+  nav { margin-bottom: var(--s5); }
+  .menu-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; box-sizing: border-box;
+                 font: inherit; font-family: var(--font-display); font-size: .78rem; font-weight: 600; letter-spacing: .14em;
+                 text-transform: uppercase; color: inherit; cursor: pointer; padding: 11px 16px; border: 0; border-radius: 999px;
+                 background: color-mix(in srgb, var(--avatar-ink, #1d2230) 8%, transparent); }
+  .menu-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+  .burger { position: relative; width: 20px; height: 14px; }
+  .burger i { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: currentColor;
+              transition: transform .3s ease, opacity .2s ease, top .3s ease; }
+  .burger i:nth-child(1) { top: 0; } .burger i:nth-child(2) { top: 6px; } .burger i:nth-child(3) { top: 12px; }
+  nav.open .burger i:nth-child(1) { top: 6px; transform: rotate(45deg); }
+  nav.open .burger i:nth-child(2) { opacity: 0; }
+  nav.open .burger i:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+  /* The list drops down as a floating sheet OVER the text (it does not push the page down). Closed, it is
+     fully hidden, also from screen readers. */
+  nav { position: relative; }
+  .menu-wrap { position: absolute; top: calc(100% + var(--s2)); left: 0; right: 0; z-index: 20; display: block;
+               padding: var(--s2); border-radius: 20px; background: var(--avatar-card-solid, #fff);
+               box-shadow: 0 12px 32px rgba(0, 0, 0, .18), 0 2px 6px rgba(0, 0, 0, .08);
+               opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.985); transform-origin: top center;
+               transition: opacity .22s ease, transform .28s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .28s; }
+  nav.open .menu-wrap { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .menu-wrap ul { flex-direction: column; flex-wrap: nowrap; gap: var(--s1); margin: 0; padding: 0; }
+  nav a { text-align: center; padding: 14px 6px; font-size: .92rem; letter-spacing: .1em;
+          background: color-mix(in srgb, var(--avatar-ink, #1d2230) 7%, transparent); }
+  nav a[aria-current="page"] { background: var(--avatar-ink, #1d2230); }
+  h1 { font-size: clamp(2.1rem, 11.5vw, 2.8rem); }
+  p { font-size: 1.14rem; }
+  .lede { font-size: 1.28rem; }
+}
+@media (max-width: 360px) { main { padding: var(--s3) var(--s3) var(--s4); } }
+@media (prefers-reduced-motion: reduce) { .menu-wrap, .burger i { transition: none; } .menu-wrap { transform: none; } }
+h1 { margin: 0 0 var(--s3); font-family: var(--font-display); font-weight: 700; font-size: clamp(2.3rem, 7vw, 4rem);
+     line-height: 1.06; letter-spacing: -.02em; text-wrap: balance; }
+p { margin: 0; opacity: .9; font-size: 1.28rem; font-weight: 350; line-height: 1.55; }
+p + p { margin-top: var(--s4); }
+.lede { font-weight: 500; font-size: 1.5rem; line-height: 1.5; max-width: 34em; margin-inline: 0; text-wrap: balance; }
+/* Running text: a comfortable line length, set apart from the header block by a clear gap. */
+.prose { max-width: 100%; margin: var(--s6) 0 0; text-align: left; opacity: .9; text-wrap: pretty; }
+.prose p { opacity: 1; }
+
+/* A quiet inline link inside running text. */
+.inline-link { color: inherit; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px;
+               text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); transition: text-decoration-color .15s; }
+.inline-link:hover, .inline-link:focus-visible { text-decoration-color: currentColor; outline: none; }
+
+/* ---- Social icons: a quiet dock of round buttons at the foot of the panel. ---- */
+.social { margin-top: var(--s6); }
+.social ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: flex-start; flex-wrap: wrap; gap: var(--s2); }
+.social a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: inherit; opacity: .8;
+            background: color-mix(in srgb, var(--avatar-ink, #1d2230) 7%, transparent);
+            transition: transform .18s ease, background-color .18s ease, opacity .18s ease; }
+.social a:hover, .social a:focus-visible { opacity: 1; transform: translateY(-3px); background: color-mix(in srgb, var(--avatar-ink, #1d2230) 14%, transparent); outline: none; }
+.social a:focus-visible { box-shadow: 0 0 0 2px var(--avatar-ink, #1d2230); }
+.social a:active { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .social a { transition: none; } }
+
+/* ---- Buttons (a row of calls to action under the text). ---- */
+.actions { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s5); }
+.btn { display: inline-flex; align-items: center; gap: var(--s2); padding: var(--s3) var(--s5); border-radius: 999px; text-decoration: none; color: inherit;
+       font-family: var(--font-display); font-weight: 600; font-size: .95rem; line-height: 1.2;
+       background: color-mix(in srgb, var(--avatar-ink, #1d2230) 8%, transparent);
+       transition: transform .18s ease, background-color .18s ease, filter .18s ease; }
+.btn small { font-size: .7rem; font-weight: 600; letter-spacing: .1em; opacity: .65; padding-left: var(--s1); }
+.btn:hover, .btn:focus-visible { transform: translateY(-2px); background: color-mix(in srgb, var(--avatar-ink, #1d2230) 14%, transparent); outline: none; }
+.btn:focus-visible { box-shadow: 0 0 0 2px var(--avatar-ink, #1d2230); }
+.btn:active { transform: translateY(0); }
+.btn.primary { background: var(--avatar-ink, #1d2230); color: var(--avatar-card-solid, #fff); }
+.btn.primary:hover, .btn.primary:focus-visible { background: var(--avatar-ink, #1d2230); filter: brightness(1.12); }
+@media (max-width: 560px) { .actions .btn { flex: 1 1 100%; justify-content: center; } }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+
+/* ---- Résumé prominence: set RESUME in site-head.js (or preview with ?resume=quiet). ---- */
+html[data-resume="quiet"] .btn.contact { background: var(--avatar-ink, #1d2230); color: var(--avatar-card-solid, #fff); order: 1; }
+html[data-resume="quiet"] .btn.contact:hover, html[data-resume="quiet"] .btn.contact:focus-visible { background: var(--avatar-ink, #1d2230); filter: brightness(1.12); }
+html[data-resume="quiet"] .btn.resume { order: 2; background: transparent; color: inherit; opacity: .7; font-weight: 500; padding-inline: var(--s3); }
+html[data-resume="quiet"] .btn.resume:hover, html[data-resume="quiet"] .btn.resume:focus-visible { opacity: 1; background: color-mix(in srgb, var(--avatar-ink, #1d2230) 9%, transparent); filter: none; }
+html[data-resume="quiet"] .link.resume { opacity: .8; }
+html[data-resume="hidden"] .resume, html[data-resume="hidden"] li:has(> .resume) { display: none; }
+
+/* Seven icons: slightly smaller buttons on narrow phones so they fit on one or two even rows. */
+@media (max-width: 420px) { .social ul { gap: var(--s1); } .social a { width: 40px; height: 40px; } }
+
+/* ---- Page-to-page navigation (Astro ClientRouter): swap instantly, no cross-fade, so nothing can flash in light or dark.
+   The avatar layer is persisted and the sky is on <html>, so only the text panel changes. ---- */
+::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; mix-blend-mode: normal; }
+
+/* Soft fade at the bottom edge: text dissolves into the sky before it reaches the floor and the avatar. */
+body::after { content: ""; position: fixed; left: 0; right: 0; bottom: 0; z-index: 150; pointer-events: none;
+              height: var(--reserve);
+              background: linear-gradient(to bottom, color-mix(in srgb, var(--avatar-sky-bg, #f2f4f7) 0%, transparent), var(--avatar-sky-bg, #f2f4f7) 75%);
+              /* blur that ramps up with the fade: the mask reveals the blur gradually towards the bottom */
+              -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+              -webkit-mask-image: linear-gradient(to bottom, transparent, #000 65%); mask-image: linear-gradient(to bottom, transparent, #000 65%); }
+
+/* ---- Wide screens: the menu is a static column on the left (it stays put while the page scrolls). ---- */
+@media (min-width: 1000px) {
+  nav { position: fixed; top: var(--s6); left: var(--s6); width: 12.5rem; z-index: 120; margin: 0; }
+  nav ul { flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: flex-start; gap: var(--s1); margin: 0; }
+  nav a { text-align: left; padding: var(--s3) var(--s5); }
+  /* leave room for the menu; the text column keeps its reading width */
+  main { padding-left: max(15.5rem, calc((100% - 760px) / 2)); }
+}
+
+/* ---- Legibility outdoors: a soft veil behind the text column only (no edge, no frame). It calms clouds, stars, rain and the sun
+   where the words are, while the sky stays visible around it and the avatar (z 200) stays crisp. ---- */
+:root { --pl: max(var(--s5), calc((100% - 760px) / 2)); --pr: max(var(--s5), calc((100% - 760px) / 2)); }
+main::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+               background: color-mix(in srgb, var(--avatar-sky-bg, #f2f4f7) 62%, transparent);
+               -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+               -webkit-mask-image: linear-gradient(to right, transparent calc(var(--pl) - 9rem), #000 calc(var(--pl) - 2rem), #000 calc(100% - var(--pr) + 2rem), transparent calc(100% - var(--pr) + 9rem));
+               mask-image: linear-gradient(to right, transparent calc(var(--pl) - 9rem), #000 calc(var(--pl) - 2rem), #000 calc(100% - var(--pr) + 2rem), transparent calc(100% - var(--pr) + 9rem)); }
+@media (min-width: 1000px) { :root { --pl: max(15.5rem, calc((100% - 760px) / 2)); } }
+@media (max-width: 560px) { main::before { mask-image: none; -webkit-mask-image: none; } }
+
+/* Wide screens: the avatar sits in the corner beside the text column, so only the fade zone is reserved at the bottom.
+   A page that fits the window then has no scrollbar. (Phones keep the full reserve: the avatar is under the text there.) */
+/* From 1240 px the avatar sits beside the text column; below that (the 1000-1239 px landscape tablets) the column's right edge reaches
+   the avatar's box, so the full reserve stays. */
+@media (min-width: 1240px) { :root { --reserve: 3.5rem; } }
+/* On wide screens a page that fits in the window needs no reserve at all (the bottom fade only matters when content scrolls under it),
+   so it never scrolls for nothing (the bottom fade itself always stays). site.js sets html.fits when the content fits and nothing in it touches the avatar's box. */
+html.fits body { padding-bottom: 0; }
+@media (max-width: 999px) { html.fits body { padding-bottom: 2rem; } }   /* room for the copyright at the bottom-left */
+
+/* Small copyright line at the very end of every page. */
+.copyright { position: absolute; left: var(--pl); bottom: 26px; z-index: 160; margin: 0;      /* the very last line of the page, just above the floor; */
+              font-size: .85rem; font-weight: 400; line-height: 1.4; opacity: .6; text-align: left; }   /* z 160: above the bottom fade (150), below the scene (200) */
+@media (max-width: 560px) { .copyright { left: var(--s4); bottom: 22px; } }
+body { position: relative; }
+/* Wide screens: the same element is pinned under the items of the fixed sidebar menu (5 items: height of one = its padding + line). */
+@media (min-width: 1000px) {
+  .copyright { position: fixed; left: var(--s6); bottom: auto; padding-left: var(--s5);
+               top: calc(var(--s6) + 5 * (2 * var(--s3) + .95rem * 1.6) + 4 * var(--s1) + var(--s5)); }
+}
+
+/* ---- Accent colour: blue like the rest of my site: #4899f7 at night, #2457f5 by day (set with the other theme variables). It marks what matters:
+   the current page, the main buttons and the small labels. Everything else stays in the calm ink colour. ---- */
+:root { --accent: var(--avatar-accent, #2457f5); --on-accent: var(--avatar-on-accent, #fff); }
+::selection { background: var(--accent); color: var(--on-accent); }
+nav a[aria-current="page"] { background: var(--accent); color: var(--on-accent); }
+.btn.primary, .link.primary { background: var(--accent); color: var(--on-accent); }
+.btn.primary:hover, .btn.primary:focus-visible, .link.primary:hover, .link.primary:focus-visible { background: var(--accent); filter: brightness(1.1); }
+.post time { color: var(--accent); opacity: 1; font-weight: 600; }
+.social a:hover, .social a:focus-visible { background: var(--accent); color: var(--on-accent); opacity: 1; }
+.card:hover h2, .card:focus-visible h2, .link:hover .t, .link:focus-visible .t { color: var(--accent); }
+.link.primary:hover .t, .link.primary:focus-visible .t { color: var(--on-accent); }
+.card:focus-visible, .link:focus-visible, .btn:focus-visible, nav a:focus-visible { box-shadow: 0 0 0 2px var(--accent); }
+
+/* ---- Sliding menu pills (see site.js): the filled one marks the current page, the soft one follows hover / focus. ---- */
+.nav-pill, .nav-hover { position: absolute; left: 0; top: 0; width: 0; height: 0; border-radius: 999px; pointer-events: none; z-index: 0; }
+.nav-pill { background: var(--accent); transition: transform .42s cubic-bezier(.3, .85, .25, 1), width .42s cubic-bezier(.3, .85, .25, 1), height .42s cubic-bezier(.3, .85, .25, 1); }
+.nav-hover { background: color-mix(in srgb, var(--avatar-ink, #1d2230) 11%, transparent); opacity: 0;
+             transition: transform .28s cubic-bezier(.3, .85, .25, 1), width .28s cubic-bezier(.3, .85, .25, 1), height .28s cubic-bezier(.3, .85, .25, 1), opacity .2s; }
+.nav-hover.on { opacity: 1; }
+nav a { position: relative; z-index: 1; transition: opacity .15s, color .3s; }
+nav.has-pill a:hover, nav.has-pill a:focus-visible { background: transparent; }
+nav.has-pill a[aria-current="page"] { background: transparent; color: var(--on-accent); }
+nav.has-pill.gliding a[aria-current="page"] { color: inherit; }
+@media (prefers-reduced-motion: reduce) { .nav-pill, .nav-hover { transition: none; } }
+
+/* ---- Toast: a short message at the bottom (used by the Konami code, see site.js). Above the bottom fade (150) and the copyright (160). ---- */
+.toast { position: fixed; left: 50%; bottom: 56px; z-index: 170; max-width: calc(100% - 2rem); padding: var(--s3) var(--s5); border-radius: 999px; text-align: center;
+         background: var(--accent); color: var(--on-accent); font: 600 .95rem/1.3 var(--font-display); letter-spacing: .02em; pointer-events: none;
+         box-shadow: 0 8px 24px rgba(0, 0, 0, .22); opacity: 0; transform: translate(-50%, 12px); transition: opacity .3s ease, transform .3s ease; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+
+/* ---- The Konami explosion (see site.js): the page vanishes in a flash and then fades slowly back. Only opacity is animated on the body:
+   a filter or transform there would break every fixed element (the menu, the floor, the scene). The flash is a circle that grows from the
+   avatar's corner and fades to nothing at its own edge, so no box edge ever shows. ---- */
+/* 5.2 s: gone within 0.2 s, then about 1.8 s of nothing (the flash takes the first second of it), then a 3.2 s fade back in. */
+@keyframes boom { 0% { opacity: 1; } 4% { opacity: 0; } 38% { opacity: 0; } 100% { opacity: 1; } }
+html.boom body { animation: boom 5.2s ease-in-out both; }
+@keyframes boom-flash { 0% { opacity: 0; transform: scale(.02); } 7% { opacity: 1; } 100% { opacity: 0; transform: scale(1); } }
+.boom-flash { position: fixed; z-index: 99999; pointer-events: none; width: 240vmax; height: 240vmax; border-radius: 50%;
+              left: calc(90vw - 120vmax); top: calc(92vh - 120vmax);
+              background: radial-gradient(circle closest-side, #fff 0, #fff 9%, #ffe9b8 22%, rgba(255, 176, 96, .75) 42%, rgba(255, 140, 70, 0) 100%);
+              animation: boom-flash 1s ease-out both; }
+/* Night and dusk: it must not blind anyone. At night the flash is a dim, warm amber glow (a fraction of the day flash); at dusk a softer
+   version of the day flash. The theme comes from html[data-avatar-time] (set with the other theme variables). */
+@keyframes boom-flash-dusk { 0% { opacity: 0; transform: scale(.02); } 7% { opacity: .6; } 100% { opacity: 0; transform: scale(1); } }
+@keyframes boom-flash-night { 0% { opacity: 0; transform: scale(.02); } 9% { opacity: .85; } 100% { opacity: 0; transform: scale(1); } }
+html[data-avatar-time="dusk"] .boom-flash { animation-name: boom-flash-dusk; }
+html[data-avatar-time="night"] .boom-flash {
+  background: radial-gradient(circle closest-side, rgba(255, 190, 110, .42) 0, rgba(255, 170, 90, .3) 22%, rgba(255, 140, 70, .16) 50%, rgba(255, 120, 60, 0) 100%);
+  animation-name: boom-flash-night; }
+
+
+/* While he walks or cycles he crosses the whole width, in front of everything at the bottom: keep the full room for him under the content, always
+   (also on wide screens, and even when the page would otherwise fit). */
+html[data-avatar-roams="1"] body { padding-bottom: calc(var(--avatar-scene-h, 0px) + 1.5rem); }   /* room only: the bottom fade keeps its normal height */
+html[data-avatar-roams="1"].fits body { padding-bottom: 0; }   /* the content ends above his lane: nothing to reserve, so no scrollbar */
+/* At night the veil is gentler still: less blur, lighter wash, so its edge never reads as a box beside the words. */
+html[data-avatar-time="night"] main::before { -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); background: color-mix(in srgb, var(--avatar-sky-bg, #1c1a17) 48%, transparent); }

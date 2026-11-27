@@ -1,0 +1,6 @@
+# Build config for statichost.eu (https://www.statichost.eu/docs/build-config/)
+# The current Node LTS (26, "Lithium"), pinned to an exact version as their docs recommend (Astro 7 needs 22.23.4 or newer),
+# a clean install from the lockfile, then the production build.
+image: node:26.13.1
+command: npm ci && npm run build
+public: dist

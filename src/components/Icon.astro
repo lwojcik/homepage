@@ -1,0 +1,20 @@
+---
+// Inline SVG icons (all recoloured to currentColor in src/icons, so they follow the theme).
+import mastodon from '../icons/mastodon.svg?raw';
+import bluesky from '../icons/bluesky.svg?raw';
+import instagram from '../icons/instagram.svg?raw';
+import linkedin from '../icons/linkedin.svg?raw';
+import github from '../icons/github.svg?raw';
+import x from '../icons/x.svg?raw';
+import email from '../icons/email.svg?raw';
+import doc from '../icons/doc.svg?raw';
+import key from '../icons/key.svg?raw';
+import arrow from '../icons/arrow.svg?raw';
+import out from '../icons/out.svg?raw';
+import glass from '../icons/glass.svg?raw';
+import px500 from '../icons/500px.svg?raw';
+const icons = { mastodon, bluesky, instagram, linkedin, github, x, email, doc, key, arrow, out, glass, px500 };
+const { name, size = 22, class: cls = '' } = Astro.props;
+const svg = (icons[name] ?? '').replace('<svg ', `<svg width="${size}" height="${size}" class="${cls}" `);
+---
+<Fragment set:html={svg} />

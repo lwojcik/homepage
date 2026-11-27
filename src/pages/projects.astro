@@ -1,0 +1,45 @@
+---
+import Base from "../layouts/Base.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+---
+
+<Base
+  current="projects"
+  title="Projects · Łukasz Wójcik"
+  description="Fun things I've built and still look after: JavaScript and TypeScript libraries on npm, open-source work and AI skills on GitHub, and a retired StarCraft II Twitch extension."
+>
+  <h1>Projects</h1>
+  <p class="tagline">
+    Fun things I’ve built and look after - usually software, online tools and
+    occasional translation works.
+  </p>
+  <div class="cards">
+    <ProjectCard
+      i={1}
+      external
+      href="https://www.npmjs.com/~lwojcik"
+      title="Packages on npm"
+      text="JavaScript / TypeScript libraries I publish and maintain."
+      tags={["npm", "Libraries", "JavaScript", "TypeScript"]}
+    />
+    <ProjectCard
+      i={2}
+      external
+      href="https://github.com/lwojcik/"
+      title="Open source on GitHub"
+      text="Reusable tools, AI skills, experiments and contributions, all in one place."
+      tags={["Open source", "AI skills", "GitHub"]}
+    />
+  </div>
+  <h2 class="section-label">Past projects</h2>
+  <div class="cards">
+    <ProjectCard
+      i={4}
+      external
+      href="https://github.com/lwojcik?tab=repositories&q=sc2pte&type=&language=&sort="
+      title="StarCraft II Twitch Extension (2018–2022)"
+      text="A Twitch extension showcasing StarCraft II player statistics alongside the video stream. Used by ca. 80 content creators streaming live to approximately 13,000 unique viewers."
+      tags={["Twitch", "StarCraft II", "TypeScript", "React"]}
+    />
+  </div>
+</Base>

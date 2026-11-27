@@ -1,0 +1,25 @@
+---
+// The main menu: a row of pills on wide screens, a hamburger with a floating sheet on phones.
+const { current } = Astro.props;
+const items = [
+  { href: '/', label: 'About', id: 'about' },
+  { href: '/projects/', label: 'Projects', id: 'projects' },
+  { href: '/photography/', label: 'Photography', id: 'photography' },
+  { href: '/writing/', label: 'Writing', id: 'writing' },
+  { href: '/contact/', label: 'Contact', id: 'contact' },
+];
+const name = items.find((i) => i.id === current)?.label ?? '';
+---
+<nav aria-label="Main">
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
+    <span class="menu-current">{name}</span>
+    <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
+  <div class="menu-wrap" id="menu">
+    <ul>
+      {items.map((i) => (
+        <li><a href={i.href} aria-current={i.id === current ? 'page' : undefined}>{i.label}</a></li>
+      ))}
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,74 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/site.css';
+import '../styles/pages.css';
+import Nav from '../components/Nav.astro';
+import Social from '../components/Social.astro';
+import { social } from '../data/site';
+
+interface Props { title: string; description: string; current: string; dock?: boolean; image?: string }
+const { title, description, current, dock = true, image = '/assets/img/photo.jpg' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+const person = {
+  '@context': 'https://schema.org', '@type': 'Person', name: 'Łukasz Wójcik', url: Astro.site?.href,
+  jobTitle: 'Software engineer and photographer', image: new URL('/assets/img/photo.jpg', Astro.site).href,
+  sameAs: social.map((s) => s.href),
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- What search engines and link previews read: every page has its own title, description and image. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Łukasz Wójcik" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+
+    <!-- Source Sans 3 is self-hosted; preload it so text never flashes in another font. -->
+    <link rel="preload" href="/assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/source-sans-3-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline src="/assets/site-head.js"></script>
+    <noscript><style>body { opacity: 1 !important; }</style></noscript>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <!-- Everything the living background draws goes here. transition:persist keeps it (and the avatar) alive
+         while you move between pages. -->
+    <div id="avatar-layer" transition:persist="avatar-layer"></div>
+    <main>
+      <Nav current={current} />
+      <!-- Only this block cross-fades between pages (see site.css); the menu and the panel stay put. -->
+      <div class="page">
+        <slot />
+        {dock && <Social />}
+      </div>
+    </main>
+    <p class="copyright">© 2009–{new Date().getFullYear()}</p>
+    {
+      import.meta.env.DEV ? (
+        <>
+          <script is:inline src="/assets/site.js" />
+          <script is:inline src="/assets/avatar-live.js" />
+          <script is:inline src="/assets/live-config.js" />
+        </>
+      ) : (
+        <script is:inline src="/assets/app.js" />
+      )
+    }
+  </body>
+</html>

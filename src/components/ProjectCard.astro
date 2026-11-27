@@ -1,0 +1,9 @@
+---
+import Icon from './Icon.astro';
+const { href, title, text, tags = [], external = false, i = 0 } = Astro.props;
+---
+<a class="card" href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined} style={`--i:${i}`}>
+  <h2>{title}<Icon name={external ? 'out' : 'arrow'} size={18} /></h2>
+  <p>{text}</p>
+  <ul class="tags">{tags.map((t) => <li class="tag">{t}</li>)}</ul>
+</a>

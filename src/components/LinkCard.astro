@@ -1,0 +1,11 @@
+---
+import Icon from './Icon.astro';
+const { href, title, sub, icon, external = false, primary = false, i = 0, extraClass = '' } = Astro.props;
+---
+<li>
+  <a class:list={['link', { primary }, extraClass]} href={href} target={external ? '_blank' : undefined} rel={external ? 'me noopener' : undefined} style={`--i:${i}`}>
+    <Icon name={icon} class="ic" />
+    <span class="t">{title}{sub && <small>{sub}</small>}</span>
+    <Icon name={external ? 'out' : 'arrow'} size={18} class="go" />
+  </a>
+</li>

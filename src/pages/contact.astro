@@ -1,0 +1,71 @@
+---
+import Base from "../layouts/Base.astro";
+import LinkCard from "../components/LinkCard.astro";
+import { social, email } from "../data/site";
+
+// LinkedIn goes with the résumé under "Professional"; everything else is "Social".
+const professional = social.filter((s) => s.label === "LinkedIn");
+const socialOnly = social.filter((s) => s.label !== "LinkedIn");
+---
+
+<Base
+  current="contact"
+  dock={false}
+  title="Contact · Łukasz Wójcik"
+  description="Get in touch: email, GPG key, résumé, and every place I'm on: Mastodon, Bluesky, Instagram, LinkedIn and GitHub."
+>
+  <h1>Get in touch</h1>
+  <p class="tagline">Email is a good start. Everything else is below.</p>
+  <h2 class="section-label">Contact me</h2>
+  <ul class="links-list">
+    <LinkCard
+      i={0}
+      primary
+      icon="email"
+      href={`mailto:${email}`}
+      title={email}
+    />
+    <LinkCard
+      i={1}
+      external
+      icon="key"
+      href="https://lukaszwojcik.net/gpg"
+      title="My GPG key"
+    />
+  </ul>
+  <h2 class="section-label">Professional</h2>
+  <ul class="links-list">
+    <LinkCard
+      i={2}
+      external
+      extraClass="resume"
+      icon="doc"
+      href="/resume.pdf"
+      title="Résumé"
+      sub="PDF document"
+    />
+    {professional.map((s, i) => (
+      <LinkCard
+        i={3 + i}
+        external
+        icon={s.icon}
+        href={s.href}
+        title={s.label}
+        sub={s.handle}
+      />
+    ))}
+  </ul>
+  <h2 class="section-label">Social</h2>
+  <ul class="links-list">
+    {socialOnly.map((s, i) => (
+      <LinkCard
+        i={6 + i}
+        external
+        icon={s.icon}
+        href={s.href}
+        title={s.label}
+        sub={s.handle}
+      />
+    ))}
+  </ul>
+</Base>
