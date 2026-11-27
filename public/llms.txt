@@ -1,0 +1,29 @@
+# Łukasz Wójcik
+
+> Personal website of Łukasz Wójcik: a senior software engineer from Warsaw, Poland (TypeScript, React, Node.js, NestJS) and documentary photographer. Maintainer of open-source npm libraries, author of books on WordPress.
+
+The site is static HTML, readable without JavaScript. The background animation is decoration only. Every page below is plain text content; the CV is the most complete summary of professional experience.
+
+## Pages
+
+- [About](https://lukaszwojcik.net/): short introduction.
+- [CV](https://lukaszwojcik.net/cv/): full online CV (experience, skills, projects, education). A PDF version is at https://lukaszwojcik.net/cv.pdf
+- [Projects](https://lukaszwojcik.net/projects/): npm libraries, open-source work on GitHub, and a retired StarCraft II Twitch extension.
+- [Photography](https://lukaszwojcik.net/photography/): documentary photography, publications and portfolio links.
+- [Writing](https://lukaszwojcik.net/writing/): blog, a Polish-language guide to Mastodon, and WordPress books published by Helion.
+- [Contact](https://lukaszwojcik.net/contact/): email, GPG key, LinkedIn and social profiles.
+
+## Elsewhere
+
+- [Blog](https://blog.lukaszwojcik.net/)
+- [Photo portfolio](https://lukaszwojcik.photo/)
+- [GitHub](https://github.com/lwojcik/)
+- [npm packages](https://www.npmjs.com/~lwojcik)
+- [LinkedIn](https://www.linkedin.com/in/lukaszwojcik/)
+- [Mastodon](https://hachyderm.io/@lukem)
+- [Bluesky](https://bsky.app/profile/lukaszwojcik.eurosky.social)
+- [GPG key](https://lukaszwojcik.net/gpg)
+
+## Optional
+
+- [Sitemap](https://lukaszwojcik.net/sitemap.xml)

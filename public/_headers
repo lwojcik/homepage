@@ -18,3 +18,8 @@
 /cv.pdf
     Content-Type: application/pdf
     Content-Disposition: attachment; filename="lukasz-wojcik-cv.pdf"
+# The GPG key is shown as plain text in the browser, under the stable address /gpg.
+/gpg
+    Content-Type: text/plain; charset=utf-8
+/gpg/
+    Content-Type: text/plain; charset=utf-8

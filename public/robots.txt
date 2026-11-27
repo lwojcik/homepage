@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# AI assistants and search crawlers are welcome to read and cite this site.
+# A short, curated overview for language models: https://lukaszwojcik.net/llms.txt
+
 Sitemap: https://lukaszwojcik.net/sitemap.xml

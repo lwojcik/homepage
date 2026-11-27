@@ -12,3 +12,6 @@
 # When you replace the CV: put the new PDF in public/, change its name here, and delete the old one. (The build fails if the file is missing.)
 /cv.pdf   /lukasz-wojcik-cv-11-2026.pdf  200
 
+# The GPG public key. /gpg is the permanent address (Contact page, llms.txt); the line below says which file in public/ it is.
+/gpg      /assets/lukasz_wojcik_gpg.asc  200
+/gpg/     /assets/lukasz_wojcik_gpg.asc  200
