@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lukaszwojcik.net/sitemap-index.xml
+Sitemap: https://lukaszwojcik.net/sitemap.xml

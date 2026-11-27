@@ -14,6 +14,11 @@ function shipScripts() {
     hooks: {
       'astro:build:done': async ({ dir, logger }) => {
         const assets = path.join(fileURLToPath(dir), 'assets');
+        // Serve the sitemap at /sitemap.xml: the site is small, so the one urlset replaces the generated index + sitemap-0.xml.
+        const root = fileURLToPath(dir);
+        await writeFile(path.join(root, 'sitemap.xml'), await readFile(path.join(root, 'sitemap-0.xml'), 'utf8'));
+        await rm(path.join(root, 'sitemap-0.xml'));
+        await rm(path.join(root, 'sitemap-index.xml'));
         const strip = (code) => code.replace(/\/\*DEBUG-START\*\/([\s\S]*?)(?:\/\*DEBUG-ELSE\*\/([\s\S]*?))?\/\*DEBUG-END\*\//g, (_, _dbg, prod) => prod ?? '');
         const min = async (file) => {
           let code = await readFile(file, 'utf8');
