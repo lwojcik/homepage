@@ -1,20 +1,103 @@
 ---
-import Base from '../layouts/Base.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import Base from "../layouts/Base.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 ---
-<Base current="writing" title="Writing · Łukasz Wójcik" description="Notes, essays and the occasional long read: my personal blog and a Polish-language guide to Mastodon.">
+
+<Base
+  current="writing"
+  title="Writing · Łukasz Wójcik"
+  description="Notes, essays and the occasional long read: my personal blog and a Polish-language guide to Mastodon."
+>
   <h1>Writing</h1>
   <p class="tagline">Notes, essays and the occasional long read.</p>
-  <div class="prose"><p>The blog is where I write at length. Shorter thoughts end up on <a class="inline-link" href="https://hachyderm.io/@lukem" target="_blank" rel="me noopener">Mastodon</a> and <a class="inline-link" href="https://bsky.app/profile/lukaszwojcik.eurosky.social" target="_blank" rel="me noopener">Bluesky</a>.</p></div>
+  <div class="prose">
+    <p>
+      The blog is where I write at length. Shorter thoughts end up on{" "}
+      <a
+        class="inline-link"
+        href="https://hachyderm.io/@lukem"
+        target="_blank"
+        rel="me noopener"
+      >
+        Mastodon
+      </a>{" "}
+      and{" "}
+      <a
+        class="inline-link"
+        href="https://bsky.app/profile/lukaszwojcik.eurosky.social"
+        target="_blank"
+        rel="me noopener"
+      >
+        Bluesky
+      </a>
+      .
+    </p>
+  </div>
   <div class="cards">
-    <ProjectCard i={0} external href="https://blog.lukaszwojcik.net/" title="Personal Writing" text="The blog: everything I write, in one place." tags={['Blog']} />
-    <ProjectCard i={1} external href="https://mastodon-poradnik.pl/" title="Guide to Mastodon" text="A Polish-language guide to Mastodon and the fediverse." tags={['Polish', 'Guide']} />
+    <ProjectCard
+      i={0}
+      external
+      href="https://blog.lukaszwojcik.net/"
+      title="Personal Writing"
+      text="The blog: everything I write, in one place."
+      tags={["Blog"]}
+    />
+    <ProjectCard
+      i={1}
+      external
+      href="https://mastodon-poradnik.pl/"
+      title="Guide to Mastodon"
+      text="A Polish-language guide to Mastodon and the fediverse."
+      tags={["Polish", "Guide"]}
+    />
   </div>
   <h2 class="section-label">Books</h2>
-  <p class="section-note">Between 2010 and 2015 I wrote two books and an ebook about WordPress. They were among the first on the subject by a Polish author.</p>
+  <p class="section-note">
+    Between 2010 and 2015 I wrote two books and an ebook about WordPress. They
+    were among the first on the subject by a Polish author.
+  </p>
   <ol class="posts">
-    <li class="post"><a href="https://helion.pl/ksiazki/wordpress-4-instalacja-i-zarzadzanie-lukasz-wojcik-magdalena-brod,wopr4i.htm" target="_blank" rel="noopener" style="--i:3"><time>2015</time><div><h3>WordPress 4. Instalacja i zarządzanie</h3><p>With Magdalena Bród. Helion, 224 pages. ISBN 978-83-246-9741-0.</p></div></a></li>
-    <li class="post"><a href="https://helion.pl/ksiazki/wordpress-3-instalacja-i-zarzadzanie-lukasz-wojcik,worpre.htm" target="_blank" rel="noopener" style="--i:4"><time>2011</time><div><h3>WordPress 3. Instalacja i zarządzanie</h3><p>Written on my own. Helion, 200 pages. ISBN 978-83-246-2790-5.</p></div></a></li>
-    <li class="post"><a href="https://lubimyczytac.pl/ksiazka/57888/wlasny-szablon-wordpress" target="_blank" rel="noopener" style="--i:5"><time>2010</time><div><h3>Własny szablon WordPress</h3><p>An ebook, 49 pages. ISBN 978-83-61744-26-9.</p></div></a></li>
+    <li class="post">
+      <a
+        href="https://helion.pl/ksiazki/wordpress-4-instalacja-i-zarzadzanie-lukasz-wojcik-magdalena-brod,wopr4i.htm"
+        target="_blank"
+        rel="noopener"
+        style="--i:3"
+      >
+        <time>2015</time>
+        <div>
+          <h3>WordPress 4. Instalacja i zarządzanie</h3>
+          <p>With Magdalena Bród. Helion, 224 pages. ISBN 978-83-246-9741-0.</p>
+        </div>
+      </a>
+    </li>
+    <li class="post">
+      <a
+        href="https://helion.pl/ksiazki/wordpress-3-instalacja-i-zarzadzanie-lukasz-wojcik,worpre.htm"
+        target="_blank"
+        rel="noopener"
+        style="--i:4"
+      >
+        <time>2011</time>
+        <div>
+          <h3>WordPress 3. Instalacja i zarządzanie</h3>
+          <p>Written on my own. Helion, 200 pages. ISBN 978-83-246-2790-5.</p>
+        </div>
+      </a>
+    </li>
+    <li class="post">
+      <a
+        href="https://web.archive.org/web/20120214044827/http://www.escapemagazine.pl/369684-wlasny-szablon-wordpress"
+        target="_blank"
+        rel="noopener"
+        style="--i:5"
+      >
+        <time>2010</time>
+        <div>
+          <h3>Własny szablon WordPress</h3>
+          <p>An ebook, 49 pages. ISBN 978-83-61744-26-9.</p>
+        </div>
+      </a>
+    </li>
   </ol>
 </Base>
