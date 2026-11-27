@@ -11,9 +11,8 @@
       windowMinWidth: 1300
     };
     // The weather comes from YOUR address, which the host forwards to Open-Meteo (the rewrite in public/_redirects), so visitors never contact
-    // Open-Meteo themselves. The rewrite holds the whole address, Warsaw included, so the page sends no coordinates. On localhost there is no
-    // rewrite, so there it calls Open-Meteo directly, with the coordinates above.
-    if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) { config.weatherUrl = '/api/weather'; config.weatherQuery = false; }
+    // Open-Meteo themselves. The page sends the Warsaw coordinates above. On localhost there is no rewrite, so there it calls Open-Meteo directly.
+    if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) config.weatherUrl = '/api/weather';
     window.live = AvatarLive.start(config);
     setInterval(updateStatus, 5000);
   }

@@ -1,1 +1,6 @@
-/api/weather https://api.open-meteo.com/v1/forecast?latitude=52.2297&longitude=21.0122&current=weather_code&daily=sunrise,sunset&forecast_days=1&timezone=Europe%2FWarsaw 200
+# Rewrites for statichost.eu (also understood by Netlify and Cloudflare Pages).
+# The page asks for /api/weather on its own address (with latitude, longitude... for Warsaw, from live-config.js); the host forwards it to
+# Open-Meteo and returns the answer, so visitors never contact Open-Meteo themselves.
+# NOTE: statichost forwards only the query string the browser sends. A query written into the destination here is IGNORED (tried: the
+# answer came back empty), so the location cannot be pinned in this file.
+/api/weather  https://api.open-meteo.com/v1/forecast  200
