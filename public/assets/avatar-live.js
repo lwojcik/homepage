@@ -328,7 +328,7 @@
     // On narrow screens everything is drawn smaller, so the scene never swallows the text.
     function pickScale() {
       var w = global.innerWidth, max = O.scale;
-      var sc = w >= 1000 ? max : w >= 700 ? Math.min(max, 4) : w >= 480 ? Math.min(max, 3) : Math.min(max, 2);
+      var sc = w >= 1000 ? max : w >= 700 ? Math.min(max, 4) : Math.min(max, 3);
       return Math.max(1, sc);
     }
     var scale = pickScale(), floorH = O.floorRows * scale;
