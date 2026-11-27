@@ -28,7 +28,7 @@
  *     Put this in <head> (see avatar-live.html) so a refresh never flashes light before dark:
  *       html:not(.avatar-ready) body { opacity: 0 }  +  a tiny script that restores the last
  *       theme colours from localStorage ('avatar-live-theme').
- *   - Hover him for a tooltip ("Working - until 12:00"); click him for a reaction.
+ *   - Click him for a reaction (a short speech line).
  *   - Debug panel: open the page with ?debug (or press the ` key).
  *
  * URL parameters (all optional, for testing):
@@ -798,23 +798,10 @@
       'max-width:240px;box-shadow:0 2px 8px rgba(0,0,0,.25)';
     LAYER.appendChild(tip);
     var tipUntil = 0, tipText = null;
-    function describe() {
-      if (!S.current) return '';
-      var c = clock(), id = S.current.id, until = nextChange(c.dow, c.min, ctxNow());
-      var forced = S.override.scene ? ' (forced)' : '';
-      return S.current.def.label + (until != null && !S.override.scene ? ' · until ' + hhmm(until) : forced);
-    }
     function inside(e) {
       if (!S.current) return false;
       var r = S.current.handle.root.getBoundingClientRect();
       return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
-    }
-    function onMove(e) {
-      if (!inside(e)) { if (!tipText) tip.style.opacity = '0'; return; }
-      tip.textContent = tipText || describe();
-      tip.style.left = Math.min(global.innerWidth - 250, e.clientX + 14) + 'px';
-      tip.style.top = Math.max(8, e.clientY - 34) + 'px';
-      tip.style.opacity = '1';
     }
     var taps = [];
     function onClick(e) {
@@ -829,17 +816,12 @@
         return;
       }
       /*DEBUG-END*/
-      if (!S.current.handle.root.animate) return;
-      try {
-        S.current.handle.root.animate([{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], { duration: 380, easing: 'ease-out' });
-      } catch (err) {}
       tipText = S.current.def.poke;
       tip.textContent = tipText; tip.style.left = Math.min(global.innerWidth - 250, e.clientX + 14) + 'px';
       tip.style.top = Math.max(8, e.clientY - 34) + 'px'; tip.style.opacity = '1';
       clearTimeout(tipUntil);
       tipUntil = setTimeout(function () { tipText = null; tip.style.opacity = '0'; }, 1800);
     }
-    document.addEventListener('pointermove', onMove);
     document.addEventListener('click', onClick);
 
     /*DEBUG-START*/
@@ -1022,11 +1004,10 @@
         clearInterval(timer); cancelAnimationFrame(raf);
         if (S.current) S.current.handle.stop();
         [floorEl, wetEl, wetEl2, snowEl, sky, wx, winEl, tip, panel, dbgBtn, panelStyle].forEach(function (e) { if (e) e.remove(); });
-        document.removeEventListener('pointermove', onMove); document.removeEventListener('click', onClick);
+        document.removeEventListener('click', onClick);
       },
       /*DEBUG-START*/debug: togglePanel,/*DEBUG-END*/
       cheat: function (name, onPeak, onWarn) { return name === 'coffee' ? coffeeCheat(onPeak, onWarn) : false; },   // e.g. live.cheat('coffee')
-      describe: describe,                 // e.g. "Working · until 12:00", for a live status line
       state: S
     };
   }

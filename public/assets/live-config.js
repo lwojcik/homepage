@@ -17,22 +17,12 @@
     // Open-Meteo themselves. The page sends the Warsaw coordinates above. On localhost there is no rewrite, so there it calls Open-Meteo directly.
     if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) config.weatherUrl = '/api/weather';
     window.live = AvatarLive.start(config);
-    setInterval(updateStatus, 5000);
   }
   startLive();
-
-  // "Right now: working · until 12:00" (any element with id="status" and a #status-text inside).
-  function updateStatus() {
-    var box = document.getElementById('status'), text = document.getElementById('status-text');
-    if (!window.live || !box || !text) return;
-    var d = window.live.describe();
-    if (d) { text.textContent = 'Right now: ' + d.charAt(0).toLowerCase() + d.slice(1); box.hidden = false; }
-  }
 
   // Runs on the first load and after every client-side navigation: wire up what the new page contains.
   function bindPage() {
     startLive();
-    setTimeout(updateStatus, 1200);
     document.querySelectorAll('[data-open-debug]').forEach(function (a) {
       if (a.dataset.bound) return; a.dataset.bound = '1';          // never bind the same link twice
       a.addEventListener('click', function (e) { e.preventDefault(); if (window.live && window.live.debug) window.live.debug(); });   // (no debug panel in production)
