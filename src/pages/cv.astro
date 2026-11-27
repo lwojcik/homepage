@@ -103,16 +103,21 @@ const education = [
   title="CV · Łukasz Wójcik"
   description="Łukasz Wójcik, Senior Software Engineer in Warsaw: 15+ years in front-end development, 5 in full-stack. TypeScript, React, Redux, NestJS. Work experience, skills, projects, publications and education."
 >
-  <h1>Łukasz Wójcik</h1>
-  <p class="tagline">Senior Software Engineer</p>
-  <p class="cv-meta">
-    Warsaw, Poland{" · "}<a class="inline-link" href={`mailto:${email}`}>{email}</a>{" · "}<a class="inline-link" href="https://www.linkedin.com/in/lukaszwojcik/" target="_blank" rel="noopener">linkedin.com/in/lukaszwojcik</a>
-  </p>
-  <div class="actions cv-actions">
-    <a class="btn primary" href={pdf} download>
-      <Icon name="doc" size={18} />
-      <span>Download PDF</span>
-    </a>
+  <div class="cv-head">
+    <img class="cv-photo" src="/assets/img/photo-cv-320.webp" alt="Łukasz Wójcik" width="160" height="160" />
+    <div class="cv-head-text">
+      <h1>Łukasz Wójcik</h1>
+      <p class="tagline">Senior Software Engineer</p>
+      <p class="cv-meta">
+        Warsaw, Poland{" · "}<a class="inline-link" href={`mailto:${email}`}>{email}</a>{" · "}<a class="inline-link" href="https://www.linkedin.com/in/lukaszwojcik/" target="_blank" rel="noopener">linkedin.com/in/lukaszwojcik</a>
+      </p>
+      <div class="actions cv-actions">
+        <a class="btn primary" href={pdf} download>
+          <Icon name="doc" size={18} />
+          <span>Download PDF</span>
+        </a>
+      </div>
+    </div>
   </div>
 
   <div class="cv-doc">

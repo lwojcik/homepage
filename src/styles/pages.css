@@ -111,6 +111,10 @@ html[data-avatar-time="night"] .gallery .ph img { box-shadow: 0 0 0 1px rgba(0, 
 :root { --pswp-bg: #12100e; }
 
 /* The online CV (src/pages/cv.astro). Left-aligned, one column; the PDF button sits under the heading. */
+.cv-head { display: flex; align-items: flex-start; gap: var(--s5); text-align: left; }
+.cv-photo { flex: none; margin-right: var(--s4); width: 160px; height: 160px; object-fit: cover; }
+.cv-head-text { min-width: 0; }
+@media (max-width: 560px) { .cv-head { flex-direction: column; align-items: flex-start; } .cv-photo { width: 120px; height: 120px; } }
 .cv-meta { margin: var(--s3) 0 0; font-size: 1.05rem; opacity: .85; }
 .cv-actions { justify-content: flex-start; margin-top: var(--s4); }
 .cv-doc { text-align: left; }
