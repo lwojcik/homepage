@@ -6,8 +6,8 @@ import Nav from '../components/Nav.astro';
 import Social from '../components/Social.astro';
 import { social } from '../data/site';
 
-interface Props { title: string; description: string; current: string; dock?: boolean; image?: string }
-const { title, description, current, dock = true, image = '/assets/img/photo.jpg' } = Astro.props;
+interface Props { title: string; description: string; current: string; dock?: boolean; image?: string; plain?: boolean }
+const { title, description, current, dock = true, image = '/assets/img/photo.jpg', plain = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;
 const person = {
@@ -17,7 +17,7 @@ const person = {
 };
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-plain={plain ? "" : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -51,7 +51,15 @@ const person = {
          while you move between pages. -->
     <div id="avatar-layer" transition:persist="avatar-layer"></div>
     <main>
-      <Nav current={current} />
+      {
+        plain ? (
+          <nav class="plain-nav" aria-label="Back to the site">
+            <a href="/">← lukaszwojcik.net</a>
+          </nav>
+        ) : (
+          <Nav current={current} />
+        )
+      }
       <!-- Only this block cross-fades between pages (see site.css); the menu and the panel stay put. -->
       <div class="page">
         <slot />

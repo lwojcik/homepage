@@ -122,7 +122,7 @@
   }
   var busyUntil = 0;
   function fire() {
-    if (Date.now() < busyUntil) return;
+    if (document.documentElement.hasAttribute('data-plain') || Date.now() < busyUntil) return;
     if (window.live && window.live.cheat && window.live.cheat('coffee',
       explode,                                                              // the peak
       function () { toast('Caffeine level: critical.'); }                   // shortly before it

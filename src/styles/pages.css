@@ -109,3 +109,30 @@ html[data-avatar-time="night"] .gallery .ph img { box-shadow: 0 0 0 1px rgba(0, 
 .gallery .ph a { display: block; width: 100%; cursor: zoom-in; }
 .gallery .ph a:focus-visible { outline: 2px solid var(--accent, #2457f5); outline-offset: 4px; }
 :root { --pswp-bg: #12100e; }
+
+/* The online CV (src/pages/cv.astro). Left-aligned, one column; the PDF button sits under the heading. */
+.cv-meta { margin: var(--s3) 0 0; font-size: 1.05rem; opacity: .85; }
+.cv-actions { justify-content: flex-start; margin-top: var(--s4); }
+.cv-doc { text-align: left; }
+.cv-doc .section-label { margin-top: var(--s6); }
+.cv-doc > p { margin: 0 0 var(--s3); }
+.cv-item { margin: 0 0 var(--s5); }
+.cv-item h3 { margin: 0; font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; line-height: 1.25; }
+.cv-when { margin: var(--s1) 0 var(--s2); font-size: 1.02rem; opacity: .7; }
+.cv-item ul { margin: 0; padding-left: 1.2em; }
+.cv-item li { margin: 0 0 var(--s2); font-size: 1.1rem; line-height: 1.5; }
+.cv-item p { margin: 0 0 var(--s2); font-size: 1.1rem; }
+.cv-skills { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: var(--s2) var(--s5); }
+.cv-skills dt { font-weight: 600; font-size: 1.08rem; }
+.cv-skills dd { margin: 0; font-size: 1.1rem; }
+@media (max-width: 560px) { .cv-skills { grid-template-columns: 1fr; gap: 0; } .cv-skills dt { margin-top: var(--s3); } }
+
+/* Print: just the CV, black on white. */
+@media print {
+  nav, #avatar-layer, canvas, .actions, .copyright, body::after, main::before { display: none !important; }
+  html, body { background: #fff !important; color: #000 !important; }
+  body { padding: 0 !important; font-size: 11pt; }
+  main { padding: 0 !important; width: auto; }
+  .cv-doc a { color: inherit; text-decoration: none; }
+  .cv-item { break-inside: avoid; }
+}

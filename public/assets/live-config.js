@@ -1,7 +1,10 @@
 // One place for the living-background settings, shared by every page.
 // With Astro's ClientRouter this file is loaded once; the avatar keeps running while you navigate.
 (function () {
-  if (!window.live) {
+  // A "plain" page (the CV, <html data-plain>) shows no avatar, sky or weather and runs no animation, so nothing is started there. The
+  // living background starts the first time a normal page is shown (also when you click through from a plain page).
+  function startLive() {
+    if (window.live || document.documentElement.hasAttribute('data-plain')) return;
     var config = {
       timezone: 'Europe/Warsaw',        // YOUR time zone: the scene follows your day
       lat: 52.2297, lon: 21.0122,       // used for the weather and sunrise / sunset
@@ -16,21 +19,23 @@
     window.live = AvatarLive.start(config);
     setInterval(updateStatus, 5000);
   }
+  startLive();
 
   // "Right now: working · until 12:00" (any element with id="status" and a #status-text inside).
   function updateStatus() {
     var box = document.getElementById('status'), text = document.getElementById('status-text');
-    if (!box || !text) return;
+    if (!window.live || !box || !text) return;
     var d = window.live.describe();
     if (d) { text.textContent = 'Right now: ' + d.charAt(0).toLowerCase() + d.slice(1); box.hidden = false; }
   }
 
   // Runs on the first load and after every client-side navigation: wire up what the new page contains.
   function bindPage() {
+    startLive();
     setTimeout(updateStatus, 1200);
     document.querySelectorAll('[data-open-debug]').forEach(function (a) {
       if (a.dataset.bound) return; a.dataset.bound = '1';          // never bind the same link twice
-      a.addEventListener('click', function (e) { e.preventDefault(); if (window.live.debug) window.live.debug(); });   // (no debug panel in production)
+      a.addEventListener('click', function (e) { e.preventDefault(); if (window.live && window.live.debug) window.live.debug(); });   // (no debug panel in production)
     });
   }
   if (!window.__liveBound) { window.__liveBound = true; document.addEventListener('astro:page-load', bindPage); }

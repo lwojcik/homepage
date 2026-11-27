@@ -1,15 +1,6 @@
 // Before the first paint: restore the colours of the last visit (or guess from the clock), so
 // a refresh never flashes light before dark; and never leave the page hidden if something fails.
 (function () {
-  // How prominently the résumé is shown, on every page, from this one line:
-  //   'prominent'  a filled button on About and a card on Contact (while you are looking for work)
-  //   'quiet'      "Get in touch" becomes the main button; the résumé stays, as a plain low-key link
-  //   'hidden'     no résumé links at all
-  // (Try it without editing: add ?resume=quiet to any page address.)
-  var RESUME = 'prominent';
-  var asked = new URLSearchParams(location.search).get('resume');
-  document.documentElement.dataset.resume = /^(prominent|quiet|hidden)$/.test(asked) ? asked : RESUME;
-
   // Is it dark now? Worked out BEFORE the first paint, the same way the scene script does it (night = 20 min before sunrise to 30 min after
   // sunset, in YOUR time zone), so a visit in the evening is dark from the very first frame. Sunrise and sunset come from the last weather
   // lookup if there is one, else from the date and latitude. (Keep TZ / LAT / LON in step with live-config.js.)
@@ -73,8 +64,6 @@
     });
     document.addEventListener('astro:after-swap', function () {
       var root = document.documentElement;
-      var asked2 = new URLSearchParams(location.search).get('resume');
-      root.dataset.resume = /^(prominent|quiet|hidden)$/.test(asked2) ? asked2 : RESUME;
       root.classList.add('avatar-ready', 'avatar-settled');
       try {
         var t = JSON.parse(localStorage.getItem('avatar-live-theme') || 'null');

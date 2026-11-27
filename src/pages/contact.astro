@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import LinkCard from "../components/LinkCard.astro";
 import { social, email } from "../data/site";
 
-// LinkedIn goes with the résumé under "Professional"; everything else is "Social".
+// LinkedIn goes with the CV under "Professional"; everything else is "Social".
 const professional = social.filter((s) => s.label === "LinkedIn");
 const socialOnly = social.filter((s) => s.label !== "LinkedIn");
 ---
@@ -12,7 +12,7 @@ const socialOnly = social.filter((s) => s.label !== "LinkedIn");
   current="contact"
   dock={false}
   title="Contact · Łukasz Wójcik"
-  description="Get in touch: email, GPG key, résumé, and every place I'm on: Mastodon, Bluesky, Instagram, LinkedIn and GitHub."
+  description="Get in touch: email, GPG key, CV, and every place I'm on: Mastodon, Bluesky, Instagram, LinkedIn and GitHub."
 >
   <h1>Get in touch</h1>
   <p class="tagline">Email is a good start. Everything else is below.</p>
@@ -37,12 +37,10 @@ const socialOnly = social.filter((s) => s.label !== "LinkedIn");
   <ul class="links-list">
     <LinkCard
       i={2}
-      external
-      extraClass="resume"
       icon="doc"
-      href="/resume.pdf"
-      title="Résumé"
-      sub="PDF document"
+      href="/cv/"
+      title="CV"
+      sub="Online, with a PDF"
     />
     {professional.map((s, i) => (
       <LinkCard

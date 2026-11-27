@@ -1,0 +1,189 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { email } from "../data/site";
+
+// The online CV.
+// The PDF is always linked as /cv.pdf; which file that is, is set in ONE place: the /cv.pdf line in public/_redirects.
+const pdf = "/cv.pdf";
+
+const summary =
+  "Senior Software Engineer with 15+ years of experience in front-end development and 5 years in full-stack development. Specializes in TypeScript development including React, Redux and NestJS. Experienced in cross-functional collaboration, delivering business-facing applications, and taking ownership of software in enterprise environments. Also: occasional open-source maintainer and contributor, published technical author.";
+
+const jobs = [
+  {
+    org: "ERGO Technology & Services",
+    role: "Full Stack Engineer",
+    when: "April 2022 – Present",
+    points: [
+      "Developed and maintained customer-facing web applications providing insurance quote calculations and omnichannel product sales in the German market",
+      "Contributing to frontend and backend development with React, Redux, TypeScript, and NestJS",
+    ],
+  },
+  {
+    org: "Polkomtel",
+    role: "IT System Leader",
+    when: "December 2021 – March 2022",
+    points: [
+      "Supported three internal projects involving billing systems as a point of contact",
+      "Contributed UI updates using HTML, CSS, and JavaScript to internal projects",
+    ],
+  },
+  {
+    org: "StreamCards",
+    role: "Frontend Developer",
+    when: "September 2021 – November 2021",
+    points: [
+      "Implemented features of an interactive card game based on esports tournaments on Twitch.tv",
+      "Collaborated with developers and stakeholders in a fast-paced startup environment",
+      "Developed UI features using React, Next.js, GraphQL and RxJS",
+    ],
+  },
+  {
+    org: "Cyfrowy Polsat / Polkomtel",
+    role: "Frontend Developer",
+    when: "September 2014 – August 2021",
+    points: [
+      "Maintained and enhanced the frontend of the Cyfrowy Polsat website",
+      "Implemented accessibility improvements addressing issues found in a WCAG compliance audit, bringing online services in line with digital accessibility regulations",
+      "Developed promotional landing pages and email templates using HTML, CSS, JavaScript, JSP templates and OpenText WebSite Management (RedDot CMS)",
+    ],
+  },
+  {
+    org: "Hypermedia Isobar",
+    role: "Frontend Developer",
+    when: "March 2013 – August 2014",
+    points: [
+      "Updated and maintained frontends of promotional websites for Procter & Gamble household brands in North America and Latin America: Old Spice, Herbal Essences, Febreze, Clairol et al.",
+      "Developed UI features using HTML, CSS, JavaScript within an ASP.NET environment",
+    ],
+  },
+  {
+    org: "dot360",
+    role: "Frontend Developer",
+    when: "October 2011 – February 2013",
+    points: [
+      "Developed and maintained websites for Polish brands and businesses, implementing designs in HTML, CSS and JavaScript",
+      "Integrated frontend code with CMS platforms using Django",
+    ],
+  },
+  {
+    org: "Promoship",
+    role: "Junior HTML/CSS Specialist",
+    when: "October 2010 – September 2011",
+    points: [
+      "Built and maintained websites for different companies from the region",
+      "Integrated HTML/CSS templates with CMS systems using Django",
+    ],
+  },
+];
+
+const skills = [
+  ["Frontend", "React, TypeScript, JavaScript, Redux, HTML, CSS"],
+  ["Backend & Data", "Node.js, NestJS, MongoDB, Redis"],
+  ["Testing (unit and E2E)","Vitest, Jest, Testing Library, Cypress, Playwright"],
+  ["DevOps & Cloud", "Docker, AWS, GitHub Actions, Ansible"],
+  ["Tools & Collaboration", "GitHub, Bitbucket, Jira, Confluence"],
+  ["AI-assisted / Agentic Development", "GitHub Copilot, Claude Code"],
+];
+
+const education = [
+  { org: "WSEI Lublin", what: "Master’s degree in Financial Administration, graduated in 2011" },
+  {
+    org: "Foreign Language Teacher’s Training College (NKJO), Puławy",
+    what: "Bachelor’s degree in teaching English as a second language, graduated in 2008",
+  },
+];
+---
+
+<Base
+  current="contact"
+  dock={false}
+  plain
+  title="CV · Łukasz Wójcik"
+  description="Łukasz Wójcik, Senior Software Engineer in Warsaw: 15+ years in front-end development, 5 in full-stack. TypeScript, React, Redux, NestJS. Work experience, skills, projects, publications and education."
+>
+  <h1>Łukasz Wójcik</h1>
+  <p class="tagline">Senior Software Engineer</p>
+  <p class="cv-meta">
+    Warsaw, Poland{" · "}<a class="inline-link" href={`mailto:${email}`}>{email}</a>{" · "}<a class="inline-link" href="https://www.linkedin.com/in/lukaszwojcik/" target="_blank" rel="noopener">linkedin.com/in/lukaszwojcik</a>
+  </p>
+  <div class="actions cv-actions">
+    <a class="btn primary" href={pdf} download>
+      <Icon name="doc" size={18} />
+      <span>Download PDF</span>
+    </a>
+  </div>
+
+  <div class="cv-doc">
+    <h2 class="section-label">Career summary</h2>
+    <p>{summary}</p>
+
+    <h2 class="section-label">Work experience</h2>
+    {jobs.map((j) => (
+      <section class="cv-item">
+        <h3>{j.org}</h3>
+        <p class="cv-when">{j.role} · {j.when}</p>
+        <ul>{j.points.map((p) => <li>{p}</li>)}</ul>
+      </section>
+    ))}
+
+    <h2 class="section-label">Skills and technologies</h2>
+    <dl class="cv-skills">
+      {skills.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
+    </dl>
+
+    <h2 class="section-label">Projects and publications</h2>
+    <section class="cv-item">
+      <h3>Open-source npm libraries</h3>
+      <p class="cv-when">2018 – Present</p>
+      <ul>
+        <li>JavaScript and TypeScript libraries published and maintained on the npm registry</li>
+        <li>Packages: <a class="inline-link" href="https://www.npmjs.com/~lwojcik" target="_blank" rel="noopener">npmjs.com/~lwojcik</a></li>
+      </ul>
+    </section>
+    <section class="cv-item">
+      <h3>Twitch.tv extension for StarCraft II content creators</h3>
+      <p class="cv-when">2018 – 2022</p>
+      <ul>
+        <li>Twitch.tv extension showcasing StarCraft II player season stats fetched from Battle.net Community APIs in a panel alongside the live stream</li>
+        <li>Used by 80 content creators streaming live to approximately 13,000 unique viewers</li>
+        <li>Tech stack: React, NestJS, MongoDB, Debian-based VPS, Cloudflare</li>
+        <li>Code archive: <a class="inline-link" href="https://github.com/lwojcik?tab=repositories&q=sc2pte" target="_blank" rel="noopener">github.com/lwojcik</a> (repositories named sc2pte)</li>
+      </ul>
+    </section>
+    <section class="cv-item">
+      <h3>Books on website development using WordPress</h3>
+      <p class="cv-when">2011 – 2015</p>
+      <ul>
+        <li>Authored two books about building and managing websites using WordPress CMS, published in print by Helion and Escape Magazine as ebook, approximately 4,000 copies sold</li>
+        <li>Author page: <a class="inline-link" href="https://helion.pl/autorzy/lukasz-wojcik" target="_blank" rel="noopener">helion.pl/autorzy/lukasz-wojcik</a></li>
+      </ul>
+    </section>
+
+    <h2 class="section-label">Education</h2>
+    {education.map((e) => (
+      <section class="cv-item">
+        <h3>{e.org}</h3>
+        <p>{e.what}</p>
+      </section>
+    ))}
+
+    <h2 class="section-label">Hobbies and interests</h2>
+    <section class="cv-item">
+      <h3>Documentary photography</h3>
+      <ul>
+        <li>Covering current events and providing illustrative imagery for news and editorial use</li>
+        <li>Developing software solutions (custom AI-driven event calendars, image submission tools) to improve information flow for an informal collective of five photojournalists</li>
+        <li>Portfolio: <a class="inline-link" href="https://lukaszwojcik.photo/" target="_blank" rel="noopener">lukaszwojcik.photo</a></li>
+      </ul>
+    </section>
+    <section class="cv-item">
+      <h3>Language translations</h3>
+      <p>
+        Translating technological and political publications authored by other people from English to Polish.{" "}
+        Blog: <a class="inline-link" href="https://blog.lukaszwojcik.net/pl/" target="_blank" rel="noopener">blog.lukaszwojcik.net/pl/</a>
+      </p>
+    </section>
+  </div>
+</Base>

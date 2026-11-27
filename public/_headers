@@ -14,3 +14,7 @@
 # Astro's own files carry a hash in their name: cache them for ever
 /_astro/*
     Cache-Control: public, max-age=31536000, immutable
+# The CV is downloaded, not shown in the browser, under a fixed name that never changes with the file behind /cv.pdf.
+/cv.pdf
+    Content-Type: application/pdf
+    Content-Disposition: attachment; filename="lukasz-wojcik-cv.pdf"

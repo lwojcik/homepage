@@ -23,6 +23,17 @@ function shipScripts() {
           }
           return (await transform(code, { minify: true, target: 'es2019', legalComments: 'none' })).code;
         };
+        // Guard: every rewrite (status 200) to a local path in _redirects must point at a file (or a page) that exists in the build.
+        try {
+          const { existsSync } = await import('node:fs');
+          const site = fileURLToPath(dir);
+          for (const line of (await readFile(path.join(site, '_redirects'), 'utf8')).split('\n')) {
+            const m = line.trim().match(/^(\S+)\s+(\/\S*)\s+200!?$/);
+            if (!m || m[2].includes('*') || m[2].includes('?')) continue;
+            const target = path.join(site, m[2]);
+            if (!existsSync(target) && !existsSync(path.join(target, 'index.html'))) throw new Error(`_redirects: ${m[1]} points to ${m[2]}, which is not in the build. Did you replace a file and forget this line?`);
+          }
+        } catch (e) { if (e.code !== 'ENOENT') throw e; }
         let before = 0, after = 0;
         const out = {};
         for (const f of (await readdir(assets)).filter((n) => n.endsWith('.js'))) {

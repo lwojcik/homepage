@@ -960,6 +960,7 @@
     }
     var last = performance.now(), raf;
     function frame(now) {
+      if (document.documentElement.hasAttribute('data-plain')) { last = now; raf = requestAnimationFrame(frame); return; }   // a plain page (the CV): nothing is drawn
       var dt = Math.min(0.1, (now - last) / 1000); last = now;
       var c = clock();
       drawWeather(dt);

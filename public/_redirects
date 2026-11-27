@@ -4,3 +4,11 @@
 # NOTE: statichost forwards only the query string the browser sends. A query written into the destination here is IGNORED (tried: the
 # answer came back empty), so the location cannot be pinned in this file.
 /api/weather  https://api.open-meteo.com/v1/forecast  200
+
+# The CV is a page at /cv/ (src/pages/cv.astro), with the PDF linked from it. The old address /resume/ is sent on to it.
+/resume/  /cv/  301
+
+# The CV as a file. /cv.pdf is the permanent address everything links to; the line below is THE ONE PLACE that says which file in public/ it is.
+# When you replace the CV: put the new PDF in public/, change its name here, and delete the old one. (The build fails if the file is missing.)
+/cv.pdf   /lukasz-wojcik-cv-11-2026.pdf  200
+
