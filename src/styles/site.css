@@ -1,7 +1,7 @@
 /* Shared styles for every page: fonts, the semi-transparent panel, the menu (hamburger on phones),
    headings and the one-time fade-in. Colours come from the CSS variables the living background sets. */
 /* Source Sans 3 (SIL Open Font License, see fonts/LICENSE-SourceSans3-OFL.md), hosted here: no request to Google.
-   Two subsets: latin, and latin-ext for Polish letters such as Ł, ł, ą, ę. */
+   Two subsets: latin, and latin-ext trimmed to the Polish letters (ĄąĆćĘęŁłŃńŚśŹźŻż) to keep it tiny. */
 @font-face {
   font-family: 'Source Sans 3'; font-style: normal; font-weight: 300 700; font-display: swap;
   src: url(/assets/fonts/source-sans-3-latin-ext.woff2) format('woff2');

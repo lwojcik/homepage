@@ -127,9 +127,10 @@ const frames = [
               src={`/assets/img/photography/${f.slug}-1024.webp`}
               srcset={`/assets/img/photography/${f.slug}-640.webp 640w, /assets/img/photography/${f.slug}-1024.webp 1024w, /assets/img/photography/${f.slug}-1440.webp 1440w`}
               sizes={
+                // Widths measured in the browser (the mat and sidebar eat into the viewport), so phones don't fetch more pixels than they show.
                 i === 0
-                  ? "(max-width: 800px) 100vw, 768px"
-                  : "(max-width: 560px) 100vw, 380px"
+                  ? "(max-width: 560px) calc(100vw - 90px), (max-width: 999px) calc(100vw - 138px), (max-width: 1128px) calc(100vw - 450px), 678px"
+                  : "(max-width: 560px) calc(100vw - 90px), (max-width: 999px) calc(50vw - 138px), (max-width: 1128px) calc(40vw - 182px), 282px"
               }
               width={f.w}
               height={f.h}
