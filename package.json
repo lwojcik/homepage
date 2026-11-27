@@ -1,5 +1,5 @@
 {
-  "name": "lukaszwojcik-net-astro-prototype",
+  "name": "@lwojcik/homepage",
   "type": "module",
   "private": true,
   "scripts": {

@@ -1,4 +1,1 @@
-# Rewrites for statichost.eu (also understood by Netlify and Cloudflare Pages).
-# The page asks for /api/weather on its own address; the host forwards it to Open-Meteo and returns the answer, query string included
-# (latitude, longitude...). Visitors never contact Open-Meteo themselves.
-/api/weather  https://api.open-meteo.com/v1/forecast  200
+/api/weather https://api.open-meteo.com/v1/forecast?latitude=52.2297&longitude=21.0122&current=weather_code&daily=sunrise,sunset&forecast_days=1&timezone=Europe%2FWarsaw 200

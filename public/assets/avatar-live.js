@@ -66,6 +66,8 @@
  *   weather    use real weather (default true)
  *   weatherUrl where the weather comes from (default: Open-Meteo directly). Point it at your own address (e.g. '/api/weather') and
  *              proxy that to https://api.open-meteo.com/v1/forecast, so visitors never contact Open-Meteo themselves.
+ *   weatherQuery  true (default): the page adds latitude, longitude... to weatherUrl. false: weatherUrl is called exactly as it is, because
+ *              the proxy already holds the full address (the location is then fixed on the server, not by the page).
  *   debug      show the debug panel (default: only with ?debug)
  *   debugButton  show a small corner button that toggles the debug panel (default false)
  *   zIndex     base z-index of the scenes (default 50)
@@ -195,7 +197,7 @@
   function start(userOpts) {
     var O = {
       timezone: 'Europe/Warsaw', lat: 52.2297, lon: 21.0122, base: DEFAULT_BASE, scale: 5, edge: 24,
-      weatherUrl: 'https://api.open-meteo.com/v1/forecast', position: 'right', avoid: 'main, [data-avatar-avoid]', floorRows: 4, sky: true, skyIntensity: 0.28, weatherIntensity: 0.6, weather: true, zIndex: 200
+      weatherUrl: 'https://api.open-meteo.com/v1/forecast', weatherQuery: true, position: 'right', avoid: 'main, [data-avatar-avoid]', floorRows: 4, sky: true, skyIntensity: 0.28, weatherIntensity: 0.6, weather: true, zIndex: 200
     };
     for (var k in userOpts) O[k] = userOpts[k];
     var Q = new URLSearchParams(global.location.search);
@@ -299,7 +301,7 @@
         S.weatherKind = cached.kind; S.apiSun = { rise: cached.sunrise, set: cached.sunset }; S.weatherSource = 'cache';
         return;
       }
-      var url = O.weatherUrl + '?latitude=' + O.lat + '&longitude=' + O.lon +
+      var url = O.weatherQuery === false ? O.weatherUrl : O.weatherUrl + '?latitude=' + O.lat + '&longitude=' + O.lon +
         '&current=weather_code&daily=sunrise,sunset&forecast_days=1&timezone=' + encodeURIComponent(O.timezone);
       fetch(url).then(function (r) { return r.json(); }).then(function (j) {
         S.weatherKind = kindFromCode(j.current.weather_code);

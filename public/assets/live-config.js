@@ -10,9 +10,10 @@
       // The window in the corner needs room beside the text column and its soft edge: below this width it is not shown at all.
       windowMinWidth: 1300
     };
-    // The weather comes from YOUR address, which the host forwards to Open-Meteo (a rewrite: vercel.json or public/_redirects), so visitors never
-    // contact Open-Meteo themselves. On localhost there is no rewrite, so there it calls Open-Meteo directly.
-    if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) config.weatherUrl = '/api/weather';
+    // The weather comes from YOUR address, which the host forwards to Open-Meteo (the rewrite in public/_redirects), so visitors never contact
+    // Open-Meteo themselves. The rewrite holds the whole address, Warsaw included, so the page sends no coordinates. On localhost there is no
+    // rewrite, so there it calls Open-Meteo directly, with the coordinates above.
+    if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) { config.weatherUrl = '/api/weather'; config.weatherQuery = false; }
     window.live = AvatarLive.start(config);
     setInterval(updateStatus, 5000);
   }

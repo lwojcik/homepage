@@ -1,3 +1,3 @@
-# lukaszwojcik.net
+# @lwojcik/homepage
 
 https://lukaszwojcik.net
