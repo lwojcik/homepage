@@ -72,6 +72,7 @@ const graph = {
     <ClientRouter fallback="swap" />
   </head>
   <body>
+    <a class="skip-link" href="#content">Skip to content</a>
     <!-- Everything the living background draws goes here. transition:persist keeps it (and the avatar) alive
          while you move between pages. -->
     <div id="avatar-layer" transition:persist="avatar-layer"></div>
@@ -86,7 +87,7 @@ const graph = {
         )
       }
       <!-- Only this block cross-fades between pages (see site.css); the menu and the panel stay put. -->
-      <div class="page">
+      <div class="page" id="content" tabindex="-1">
         <slot />
         {dock && <Social />}
       </div>
