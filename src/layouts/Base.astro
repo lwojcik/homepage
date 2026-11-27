@@ -7,13 +7,28 @@ import Social from '../components/Social.astro';
 import { social } from '../data/site';
 
 interface Props { title: string; description: string; current: string; dock?: boolean; image?: string; plain?: boolean }
-const { title, description, current, dock = true, image = '/assets/img/photo.jpg', plain = false } = Astro.props;
+const { title, description, current, dock = true, image = '/assets/img/og.png', plain = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;
-const person = {
-  '@context': 'https://schema.org', '@type': 'Person', name: 'Łukasz Wójcik', url: Astro.site?.href,
-  jobTitle: 'Software engineer and photographer', image: new URL('/assets/img/photo.jpg', Astro.site).href,
-  sameAs: social.map((s) => s.href),
+const site = Astro.site!.href;
+const personId = `${site}#person`;
+// One linked graph: who the site is about (Person), the site itself (WebSite) and this page (WebPage / ProfilePage on the home page).
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person', '@id': personId, name: 'Łukasz Wójcik', url: site,
+      jobTitle: 'Software engineer, photographer', description: 'Software engineer and documentary photographer based in Poland.',
+      image: new URL('/assets/img/photo.jpg', Astro.site).href,
+      knowsAbout: ['TypeScript', 'React', 'Node.js', 'NestJS', 'Photography'],
+      sameAs: [...social.map((s) => s.href), 'https://lukaszwojcik.photo/', 'https://www.npmjs.com/~lwojcik', 'https://glass.photo/lukaszwojcik', 'https://500px.com/p/lwojcik'],
+    },
+    { '@type': 'WebSite', '@id': `${site}#website`, url: site, name: 'Łukasz Wójcik', inLanguage: 'en', publisher: { '@id': personId } },
+    {
+      '@type': Astro.url.pathname === '/' ? 'ProfilePage' : 'WebPage', '@id': `${canonical}#page`, url: canonical, name: title, description,
+      isPartOf: { '@id': `${site}#website` }, ...(Astro.url.pathname === '/' ? { mainEntity: { '@id': personId } } : { about: { '@id': personId } }),
+    },
+  ],
 };
 ---
 <!doctype html>
@@ -31,14 +46,23 @@ const person = {
     <link rel="me" href="https://hachyderm.io/@lukem" />
 
     <!-- What search engines and link previews read: every page has its own title, description and image. -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={Astro.url.pathname === '/' ? 'profile' : 'website'} />
+    {Astro.url.pathname === '/' && <><meta property="profile:first_name" content="Łukasz" /><meta property="profile:last_name" content="Wójcik" /></>}
     <meta property="og:site_name" content="Łukasz Wójcik" />
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta name="twitter:card" content="summary" />
-    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Łukasz Wójcik, software engineer and photographer" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Łukasz Wójcik, software engineer and photographer" />
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
 
     <!-- Source Sans 3 is self-hosted; preload it so text never flashes in another font. -->
     <link rel="preload" href="/assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin />
