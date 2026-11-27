@@ -244,8 +244,8 @@ html[data-plain] body { opacity: 1 !important; padding-bottom: var(--s6) !import
 /* Skip link: off-screen until a keyboard user tabs to it. Centred, in the ink colour with an accent ring and an arrow, so it is unmistakable and never looks like a menu item.
    On narrow screens the menu bar runs along the top, so it drops below the bar instead of covering it. */
 .skip-link { position: fixed; top: var(--s4); left: 50%; z-index: 100002; padding: var(--s3) var(--s6); border-radius: 10px; font: 700 1.1rem/1.2 var(--font-display); white-space: nowrap;
-             background: var(--avatar-ink, #1d2230); color: var(--avatar-card-solid, #fff); text-decoration: none; box-shadow: 0 0 0 3px var(--accent), 0 8px 24px rgba(0, 0, 0, .4); transform: translate(-50%, calc(-100% - 8rem)); }
+             background: var(--avatar-ink, #1d2230); color: var(--avatar-card-solid, #fff); text-decoration: none; box-shadow: 0 0 0 3px var(--accent), 0 8px 24px rgba(0, 0, 0, .4); transform: translate(-50%, calc(-100% - 8rem)); opacity: 0; pointer-events: none; }
 .skip-link::before { content: "↓ "; color: var(--accent); }
-.skip-link:focus, .skip-link:focus-visible { transform: translate(-50%, 0); outline: none; }
+.skip-link:focus, .skip-link:focus-visible { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; outline: none; }
 @media (max-width: 999px) { .skip-link { top: 5rem; } }
 #content:focus { outline: none; }
